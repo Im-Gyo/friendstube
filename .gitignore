@@ -1,0 +1,6 @@
+config.js
+*.log
+.env
+logs/*
+node_modules
+coverage

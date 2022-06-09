@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirendsTube</title>
+    <style>
+        .logo {
+            text-align: center;
+            margin-top: 220px;
+        }
+        .room {
+            text-align: center;
+        }
+        .roomPW {
+            text-align: center;
+        }
+        .room input {
+            text-align: center;
+            border: 3px solid black;
+            margin-top: 20px;            
+            margin-left: 70px;       
+            height: 50px;
+            width: 600px;
+            box-shadow: 2px 2px 4px black;
+        }
+        .roomPW input {
+            text-align: center;
+            border: 3px solid black;
+            margin-top: 5px;            
+            margin-right: 34px;       
+            height: 20px;
+            width: 600px;
+            box-shadow: 2px 2px 4px black;
+        }        
+        .room button {
+            margin-top: 20px;            
+            height: 55px;
+            width: 100px;
+            border: 3px solid black;
+            background-color: red;
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 5px;
+            cursor: pointer;
+            box-shadow: 2px 2px 4px black ;
+        }
+        .privateCheck {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body bgcolor="#353535">
+    <div class="logo">
+        <img src="/img/로고.png">
+    </div>
+    <div class="room">
+        <input class="roomInput" type="text" placeholder="Room ID"/>
+        <button class="joinRoom" type="button">Join</button>
+    </div>
+    <div class="roomPW" style="display: none;">
+        <input type="password" class="roomPassword"  placeholder="Room Password"/>        
+    </div>
+    <div class="privateCheck">
+        <input type="checkbox" id="checkbox" name="private" value="0">
+        Private
+    </div>
+</body>
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script>
+    $(".privateCheck").click(function() {
+        if($("#checkbox").val() == 1) {
+            $('.roomPW').attr('style', 'display: none;');
+            $("#checkbox").val(0);
+        } else {
+            $('.roomPW').attr('style', 'display');
+            $("#checkbox").val(1);
+        }
+    });
+
+    $('.joinRoom').click(function() {
+        var mapRoomInfo = {};        
+        var strRoomId = $('.roomInput').val();
+        var strRoomPw = $('.roomPassword').val();
+        if($('#checkbox').val() == 1) {
+            mapRoomInfo.roomPw = strRoomPw;
+        }
+        mapRoomInfo.roomId = strRoomId;
+        
+        console.log(mapRoomInfo);
+    });
+</script>
+</html>

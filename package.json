@@ -1,0 +1,31 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "app.js",
+  "repository": "git@github.com:TeamSupposers/boilerplate.git",
+  "author": "jungmingyo <jywlsh3@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.20.1",
+    "socket.io": "^4.5.1",
+    "util": "^0.12.4",
+    "winston": "^3.7.2",
+    "winston-daily-rotate-file": "^4.6.1"
+  },
+  "scripts": {
+    "start": "node ./app.js",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "jest": "^28.1.0"
+  }
+}
