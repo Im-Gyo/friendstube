@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoRoom</title>
-    
+
     <link rel="stylesheet" href="/css/custom.css">
-    <script type="text/javascript" src="/js/socket.io.js"></script> 
-    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>       
+    <script type="text/javascript" src="/js/socket.io.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
     <!-- <script type="text/javascript" src="src/js/bootstrap.min.js"></script> -->
 </head>
 <header>
@@ -21,136 +22,29 @@
 <body bgcolor="#353535">
     <table class="mainTable" border="1">
         <th style="width: 80%;">
-            asdasd
+            <!-- 유튜브 https://www.youtube.com/embed/원본의 watch?v=영상주소-->
+            <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DU2DFXWzTdw">
+
+            </iframe> -->
+            <div id="player"></div>
         </th>
         <th>
             <div calss="chatRoom">
                 <section class="chatbox">
-                  <section class="chat-window">
-                    <article class="msg-container msg-remote" id="msg-0">
-                      <div class="msg-box">
-                        <img class="user-img" id="user-0" src="" />
-                        <div class="flr">
-                          <div class="messages">
-                            <p class="msg" id="msg-0">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius, neque non tristique tincidunt, mauris nunc efficitur erat, elementum semper justo odio id nisi.
-                            </p>
-                          </div>
-                          <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
-                        </div>
-                      </div>
-                    </article>
-                    <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-                          <img class="user-img" id="user-0" src="" />
-                          <div class="flr">
-                            <div class="messages">
-                              <p class="msg" id="msg-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius, neque non tristique tincidunt, mauris nunc efficitur erat, elementum semper justo odio id nisi.
-                              </p>
-                            </div>
-                            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-                          <img class="user-img" id="user-0" src="" />
-                          <div class="flr">
-                            <div class="messages">
-                              <p class="msg" id="msg-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius, neque non tristique tincidunt, mauris nunc efficitur erat, elementum semper justo odio id nisi.
-                              </p>
-                            </div>
-                            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-                          <img class="user-img" id="user-0" src="" />
-                          <div class="flr">
-                            <div class="messages">
-                              <p class="msg" id="msg-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius, neque non tristique tincidunt, mauris nunc efficitur erat, elementum semper justo odio id nisi.
-                              </p>
-                            </div>
-                            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-                          <img class="user-img" id="user-0" src="" />
-                          <div class="flr">
-                            <div class="messages">
-                              <p class="msg" id="msg-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius, neque non tristique tincidunt, mauris nunc efficitur erat, elementum semper justo odio id nisi.
-                              </p>
-                            </div>
-                            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
-                          </div>
-                        </div>
-                      </article>
-                    <article class="msg-container msg-self" id="msg-0">
-                      <div class="msg-box">
-                        <div class="flr">
-                          <div class="messages">
-                            <p class="msg" id="msg-1">
-                              Lorem ipsum dolor sit amet
-                            </p>                            
-                          </div>
-                          <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">2 minutes ago</span></span>
-                        </div>
-                        <img class="user-img" id="user-0" src="" />
-                      </div>
-                    </article>
-                    <article class="msg-container msg-remote" id="msg-0">
-                      <div class="msg-box">
-                        <img class="user-img" id="user-0" src="" />
-                        <div class="flr">
-                          <div class="messages">
-                            <p class="msg" id="msg-0">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </p>
-                          </div>
-                          <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">1 minute ago</span></span>
-                        </div>
-                      </div>
-                    </article>
-                    <article class="msg-container msg-remote" id="msg-0">
-                      <div class="msg-box">
-                        <img class="user-img" id="user-0" src="" />
-                        <div class="flr">
-                          <div class="messages">
-                            <p class="msg" id="msg-0">
-                              Lorem ipsum dolor sit amet.
-                            </p>
-                          </div>
-                          <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">Now</span></span>
-                        </div>
-                      </div>
-                    </article>
-                    <article class="msg-container msg-self" id="msg-0">
-                      <div class="msg-box">
-                        <div class="flr">
-                          <div class="messages">
-                            <p class="msg" id="msg-1">
-                              Lorem ipsum
-                            </p>
-                          </div>
-                          <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">Now</span></span>
-                        </div>
-                        <img class="user-img" id="user-0" src="" />
-                      </div>
-                    </article>
-                  </section>
-                  <form class="chat-input" onsubmit="return false;">
-                    <input type="text" autocomplete="on" placeholder="Type a message" />
-                    <button>
-                        <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="rgba(0,0,0,.38)" d="M17,12L12,17V14H8V10H12V7L17,12M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L5,8.09V15.91L12,19.85L19,15.91V8.09L12,4.15Z" /></svg>
-                    </button>
-                  </form>
+                    <section class="chat-window">
+                        <!-- 리스트 목록 -->
+                    </section>
+
+                    <form class="chat-input" onsubmit="return false;">
+                        <input type="text" autocomplete="on" placeholder="Type a message" />
+                        <button>
+                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                <path fill="rgba(0,0,0,.38)"
+                                    d="M17,12L12,17V14H8V10H12V7L17,12M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L5,8.09V15.91L12,19.85L19,15.91V8.09L12,4.15Z" />
+                            </svg>
+                        </button>
+                    </form>
+
                 </section>
             </div>
         </th>
@@ -158,76 +52,117 @@
     <select>
         <option value="Room1">Room1</option>
         <option value="Room2">Room2</option>
-      </select>
-      <ul id="messages"></ul>
-      <form action="">
-        <input id="m" autocomplete="off"/>
+    </select>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" />
         <button>Send</button>
-      </form>
+    </form>
 </body>
 <script>
-    $('.chat-input input').keyup(function(e) {
-    if ($(this).val() == '')
-        $(this).removeAttr('good');
-    else
-        $(this).attr('good', '');
-    });
+    // iframe player api코드를 비동기로 로드
+    var tag = document.createElement('script');
 
-    $(() => {
-    const name = prompt('What your name');
-    const socket = io();
-    let room = ['room1', 'room2'];
-    let num = 0;
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    socket.emit('joinRoom', num, name);
+    // API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성합니다.
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '100%',
+            width: '100%',
+            videoId: 'M7lc1UVf-VE',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
 
-    $('select').change(() => {        
-      socket.emit('leaveRoom', num, name);
-      num++;
-      num = num % 2;
-      socket.emit('joinRoom', num, name);
-    });
+    // 비디오 플레이어가 준비되면 API가 이 기능을 호출합니다.
+    function onPlayerReady(event) {
+        event.target.playVideo();
 
+        // 이 창은 이벤트를 발생시키는 소스 "창"입니다.
+        var iframeWindow = player.getIframe().contentWindow;
+        // 따라서 새 업데이트와 비교할 수 있습니다.
+        var lastTimeUpdate = 0;
 
-    $('form').submit(() => {
-      socket.emit('chat message', num, name, $('#m').val());
-      $('#m').val('');
-      return false;
-    });
+        // postMessage로 트리거된 이벤트를 청취합니다.
+        window.addEventListener("message", function (event) {
+            // 이벤트가 YouTube I 프레임에서 전송되었는지 확인합니다.
+            if (event.source === iframeWindow) {
+                var data = JSON.parse(event.data);
 
-    socket.on('chat message', (name, msg) => {
-      $('#messages').append($('<li>').text(name + '  :  ' +
-        msg));
-    });
+                // "infoDelivery" 이벤트는 YT가 다음을 전송하는 데 사용됩니다.
+                // 플레이어의 정보 변화 종류,
+                // 현재 시간 또는 재생 품질 변경과 같은 항목입니다.
+                if (
+                    data.event === "infoDelivery" &&
+                    data.info &&
+                    data.info.currentTime
+                ) {
+                    // currentTime은 매우 자주 방출됩니다.
+                    // 하지만 우리는 단지 2차 변화에만 신경을 쓴다.
+                    var time = Math.floor(data.info.currentTime);
 
-    socket.on('leaveRoom', (num, name) => {
-      $('#messages').append($('<li>').text(name + '    leaved ' + room[num] + ' :('));
-    });
+                    if (time !== lastTimeUpdate) {
+                        lastTimeUpdate = time;
+                        console.log(time); // 돔을 업데이트하고, 이벤트를 내보내고, 뭐든 간에
+                    }
+                }
+            }
+        });
+    }
 
-    socket.on('joinRoom', (num, name) => {        
-      $('#messages').append($('<li>').text(name + '    joined ' + room[num] + ':)'));
-    });
-  });
+    // 플레이어의 상태가 바뀌면 API가 이 함수를 호출한다.
+    // 이 기능은 비디오(상태=1)를 재생할 때 플레이어가 6초간 재생한 다음 중지해야 함을 나타냅니다.
+    var done = false;
+    // 플레이어 상태 변경 시
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            done = true;
+        }
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
 
-    // function namespace(nsp) {
-    //     const namespace = io('/namespace' + nsp);        
-    //       // news라는 이벤트를 받을 시 콘솔에 data.hello를 출력
-    //       namespace.on('news', (data) => {
-    //       console.log(data.hello);
-    //     });
-    // }
+    // 해당 키프레임으로 이동
+    function seekTo() {
+        player.seekTo(804);
+    }
 
-    // $(() => {
-    //     const socket = io();
-    //     $('form').submit(() => {
-    //       socket.emit('message', $('#m').val());
-    //       $('#m').val('');
-    //       return false;
-    //     });
+  //   $(() => {
+  //   const name = prompt('What your name');
+  //   const socket = io();
+  //   let room = ['room1', 'room2'];
+  //   let num = 0;
 
-    //     socket.on('message', (msg) => {
-    //       $('#messages').append($('<li>').text(msg));
-    //     });
-    // });
+  //   socket.emit('joinRoom', num, name);
+
+  //   $('select').change(() => {
+  //     socket.emit('leaveRoom', num, name);
+  //     num++;
+  //     num = num % 2;
+  //     socket.emit('joinRoom', num, name);
+  //   });
+
+  //   socket.on('chat message', (name, msg) => {
+  //     $('#messages').append($('<li>').text(name + '  :  ' +
+  //       msg));
+  //   });
+
+  //   socket.on('leaveRoom', (num, name) => {
+  //     $('#messages').append($('<li>').text(name + '    leaved ' + room[num] + ' :('));
+  //   });
+
+  //   socket.on('joinRoom', (num, name) => {
+  //     $('#messages').append($('<li>').text(name + '    joined ' + room[num] + ':)'));
+  //   });
+  // });
 </script>
+
 </html>
