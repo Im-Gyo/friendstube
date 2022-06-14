@@ -67,7 +67,7 @@
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성합니다.
+    // API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성
     var player;
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -81,44 +81,41 @@
         });
     }
 
-    // 비디오 플레이어가 준비되면 API가 이 기능을 호출합니다.
+    // 비디오 플레이어가 준비되면 API가 이 기능을 호출
     function onPlayerReady(event) {
         event.target.playVideo();
 
-        // 이 창은 이벤트를 발생시키는 소스 "창"입니다.
+        // 플레이어 iframe 엘리먼트 가져옴
         var iframeWindow = player.getIframe().contentWindow;
-        // 따라서 새 업데이트와 비교할 수 있습니다.
+        // 새 업데이트와 비교할 변수 생성
         var lastTimeUpdate = 0;
 
         // postMessage로 트리거된 이벤트를 청취합니다.
-        window.addEventListener("message", function (event) {
-            // 이벤트가 YouTube I 프레임에서 전송되었는지 확인합니다.
+        window.addEventListener("message", function (event) {                        
+            // 이벤트가 YouTube iframe에서 전송되었는지 확인합니다.
             if (event.source === iframeWindow) {
-                var data = JSON.parse(event.data);
+                var data = JSON.parse(event.data);                
 
-                // "infoDelivery" 이벤트는 YT가 다음을 전송하는 데 사용됩니다.
-                // 플레이어의 정보 변화 종류,
-                // 현재 시간 또는 재생 품질 변경과 같은 항목입니다.
-                if (
-                    data.event === "infoDelivery" &&
-                    data.info &&
-                    data.info.currentTime
-                ) {
-                    // currentTime은 매우 자주 방출됩니다.
-                    // 하지만 우리는 단지 2차 변화에만 신경을 쓴다.
+                // "infoDelivery" 이벤트는 YT가 다음을 전송하는 데 사용
+                // 플레이어의 정보 변화 종류, 현재 시간 또는 재생 품질 변경과 같은 항목
+                if (data.event === "infoDelivery" && data.info && data.info.currentTime) {
                     var time = Math.floor(data.info.currentTime);
 
-                    if (time !== lastTimeUpdate) {
-                        lastTimeUpdate = time;
-                        console.log(time); // 돔을 업데이트하고, 이벤트를 내보내고, 뭐든 간에
+                    if (time !== lastTimeUpdate) { // 마지막업데이트 시간과 현재 시간이 다르면
+                        if(Math.floor(time - lastTimeUpdate) > 1 || Math.floor(time - lastTimeUpdate) < -1) { // 현재시간 - 마지막 업데이트 시간이 1초보다 크거나 -1초보다 작으면
+                            lastTimeUpdate = time;
+                            console.log(time);
+                        } else {
+                            lastTimeUpdate = time;
+                        }
                     }
                 }
             }
         });
     }
 
-    // 플레이어의 상태가 바뀌면 API가 이 함수를 호출한다.
-    // 이 기능은 비디오(상태=1)를 재생할 때 플레이어가 6초간 재생한 다음 중지해야 함을 나타냅니다.
+    // 플레이어의 상태가 바뀌면 API가 이 함수를 호출
+    // 이 기능은 비디오(상태=1)를 재생할 때 플레이어가 6초간 재생한 다음 중지해야 함
     var done = false;
     // 플레이어 상태 변경 시
     function onPlayerStateChange(event) {
