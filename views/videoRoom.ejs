@@ -22,10 +22,7 @@
 <body bgcolor="#353535">
     <table class="mainTable" border="1">
         <th style="width: 80%;">
-            <!-- 유튜브 https://www.youtube.com/embed/원본의 watch?v=영상주소-->
-            <!-- <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DU2DFXWzTdw">
-
-            </iframe> -->
+            <!-- iframe -->
             <div id="player"></div>
         </th>
         <th>
@@ -69,11 +66,14 @@
 
     // API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성
     var player;
-    function onYouTubeIframeAPIReady() {
+    function onYouTubeIframeAPIReady(url) {
+        if(!url) {
+            url = 'j6mgZX8_hhk';
+        }
         player = new YT.Player('player', {
             height: '100%',
             width: '100%',
-            videoId: 'M7lc1UVf-VE',
+            videoId: url,
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -90,13 +90,13 @@
         // 새 업데이트와 비교할 변수 생성
         var lastTimeUpdate = 0;
 
-        // postMessage로 트리거된 이벤트를 청취합니다.
-        window.addEventListener("message", function (event) {                        
-            // 이벤트가 YouTube iframe에서 전송되었는지 확인합니다.
+        // postMessage로 트리거된 이벤트를 청취
+        window.addEventListener("message", function (event) {
+            // 이벤트가 YouTube iframe에서 전송되었는지 확인
             if (event.source === iframeWindow) {
-                var data = JSON.parse(event.data);                
+                var data = JSON.parse(event.data);
 
-                // "infoDelivery" 이벤트는 YT가 다음을 전송하는 데 사용
+                // "infoDelivery" 이벤트는 YT가 다음을 전송할때 사용
                 // 플레이어의 정보 변화 종류, 현재 시간 또는 재생 품질 변경과 같은 항목
                 if (data.event === "infoDelivery" && data.info && data.info.currentTime) {
                     var time = Math.floor(data.info.currentTime);
@@ -113,23 +113,31 @@
             }
         });
     }
-
-    // 플레이어의 상태가 바뀌면 API가 이 함수를 호출
-    // 이 기능은 비디오(상태=1)를 재생할 때 플레이어가 6초간 재생한 다음 중지해야 함
-    var done = false;
-    // 플레이어 상태 변경 시
+    
+    // 플레이어의 상태가 바뀌면 API가 이 함수를 호출    
     function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-            done = true;
+        if (event.data == YT.PlayerState.PLAYING) {
+            console.log('playing');
+        }
+        if (event.data == YT.PlayerState.ENDED) {
+            console.log('end');
+            player.loadVideoById('q0CX-0k2l0g');
+        }
+        if (event.data == YT.PlayerState.PAUSED) {
+            console.log('pause');
+        }
+        if (event.data == YT.PlayerState.BUFFERING) {
+            console.log('buffer');     
         }
     }
+
     function stopVideo() {
         player.stopVideo();
     }
 
     // 해당 키프레임으로 이동
-    function seekTo() {
-        player.seekTo(804);
+    function seekTo(keyframe) {
+        player.seekTo(keyframe);
     }
 
   //   $(() => {
