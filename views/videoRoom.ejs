@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoRoom</title>
 
-    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/custom.css">    
     <script type="text/javascript" src="/js/socket.io.js"></script>
     <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
     <!-- <script type="text/javascript" src="src/js/bootstrap.min.js"></script> -->
@@ -45,50 +45,48 @@
                 </section>
             </div>
         </th>
-    </table>
-    <select>
-        <option value="Room1">Room1</option>
-        <option value="Room2">Room2</option>
-    </select>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off" />
-        <button>Send</button>
-    </form>
+    </table>    
+    <!-- <h2 id="HChat">채팅방이름</h2> -->
+    <!-- <form id="form">
+        <input type="text" id="ChatInput" autocomplete="off"/>
+        <input type="button" id="ChatSend" value="보냄"/>
+    </form> -->
+    <!-- <div id="ChatBoard"></div> -->
 </body>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-    // iframe player api코드를 비동기로 로드
-    var tag = document.createElement('script');
-
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성
-    var player;
-    function onYouTubeIframeAPIReady(url) {
-        if(!url) {
-            url = 'j6mgZX8_hhk';
-        }
+    var lastTimeUpdate = 0;
+    var room = 'onggo';
+    
+    window.onload = function(){
+	// API 코드가 다운로드된 후 <iframe>(및 YouTube 플레이어)을 생성
+        var player;
+    // function onYouTubeIframeAPIReady(url) {
+    //     console.log('3')
+    //     if(!url) {
+    //         url = 'j6mgZX8_hhk';
+    //     }
+    console.log('1')
         player = new YT.Player('player', {
             height: '100%',
             width: '100%',
-            videoId: url,
+            videoId: 'j6mgZX8_hhk',
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
             }
         });
-    }
-
+    // }
+    console.log('2')
     // 비디오 플레이어가 준비되면 API가 이 기능을 호출
     function onPlayerReady(event) {
+        console.log('4')
         event.target.playVideo();
 
         // 플레이어 iframe 엘리먼트 가져옴
         var iframeWindow = player.getIframe().contentWindow;
         // 새 업데이트와 비교할 변수 생성
-        var lastTimeUpdate = 0;
+        lastTimeUpdate = 0;
 
         // postMessage로 트리거된 이벤트를 청취
         window.addEventListener("message", function (event) {
@@ -102,6 +100,7 @@
                     var time = Math.floor(data.info.currentTime);
 
                     if (time !== lastTimeUpdate) { // 마지막업데이트 시간과 현재 시간이 다르면
+                        // socket.emit("liveKeyFrame", time);
                         if(Math.floor(time - lastTimeUpdate) > 1 || Math.floor(time - lastTimeUpdate) < -1) { // 현재시간 - 마지막 업데이트 시간이 1초보다 크거나 -1초보다 작으면
                             lastTimeUpdate = time;
                             console.log(time);
@@ -111,11 +110,12 @@
                     }
                 }
             }
-        });
+        });        
     }
     
     // 플레이어의 상태가 바뀌면 API가 이 함수를 호출    
     function onPlayerStateChange(event) {
+        console.log('5')
         if (event.data == YT.PlayerState.PLAYING) {
             console.log('playing');
         }
@@ -127,47 +127,60 @@
             console.log('pause');
         }
         if (event.data == YT.PlayerState.BUFFERING) {
-            console.log('buffer');     
+            // socket.emit('sendBuffer', lastTimeUpdate, room);
+            console.log('buffer');
+        }
+        if (event.data == YT.PlayerState.CUED) {
+            console.log('cue');
         }
     }
-
-    function stopVideo() {
-        player.stopVideo();
+    
+    console.log('6')
+    function stopVideo() {  
+        if(player.stopVideo) player.stopVideo();
     }
+    console.log('7')    
+    function startVideo(url) {
+        if(player.loadVideoById) {
+            player.loadVideoById('q0CX-0k2l0g');
+        }
+        // socket.emit('sendVideoUrl', url);
+    }    
+    function addVideoList() {
 
+    }
+    console.log('8')
     // 해당 키프레임으로 이동
     function seekTo(keyframe) {
-        player.seekTo(keyframe);
+        if(player.loadVideoById) player.seekTo(keyframe);
+    }
+    
+    const socket = io();
+        console.log('10')
+        socket.emit('joinRoom', room);
+
+        socket.on('joinResult', function(roomInfo) {
+            console.log(roomInfo.roomName+'방 접속');
+            stopVideo();
+            seekTo(roomInfo.keyFrame);
+        });
+
+        socket.on('getVideoInfo', function(videoInfo) {
+            player.loadVideoById(videoInfo.url);
+        });
+
+        socket.on('getVideoTime', function(videoInfo) {
+            seekTo(videoInfo.keyFrame);
+        });        
     }
 
-  //   $(() => {
-  //   const name = prompt('What your name');
-  //   const socket = io();
-  //   let room = ['room1', 'room2'];
-  //   let num = 0;
-
-  //   socket.emit('joinRoom', num, name);
-
-  //   $('select').change(() => {
-  //     socket.emit('leaveRoom', num, name);
-  //     num++;
-  //     num = num % 2;
-  //     socket.emit('joinRoom', num, name);
-  //   });
-
-  //   socket.on('chat message', (name, msg) => {
-  //     $('#messages').append($('<li>').text(name + '  :  ' +
-  //       msg));
-  //   });
-
-  //   socket.on('leaveRoom', (num, name) => {
-  //     $('#messages').append($('<li>').text(name + '    leaved ' + room[num] + ' :('));
-  //   });
-
-  //   socket.on('joinRoom', (num, name) => {
-  //     $('#messages').append($('<li>').text(name + '    joined ' + room[num] + ':)'));
-  //   });
-  // });
+    // iframe player api코드를 비동기로 로드
+    // var tag = document.createElement('script');    
+    // tag.src = "https://www.youtube.com/iframe_api";
+    // var firstScriptTag = document.getElementsByTagName('script')[0];
+    // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+    
 </script>
 
 </html>

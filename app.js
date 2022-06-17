@@ -19,56 +19,41 @@ let room = ['room1', 'room2'];
 let a = 0;
 
 io.on('connection', (socket) => {
+    const { userUrl } = socket.request;
+    const videoInfo = {};
+
+    console.log('연결됨 : '+userUrl);
+
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+        console.log('user disconnected');
+    });  
+
+    socket.on('joinRoom', (room) => {
+        let roomInfo = {};
+        roomInfo.videoUrl = videoInfo.videoUrl;
+        roomInfo.roomName = room;   
+        roomInfo.videoFrame = videoInfo.keyFrame;
+
+        socket.join(room);
+        io.to(room).emit('joinResult', roomInfo);
     });
-  
-  
-    socket.on('leaveRoom', (num, name) => {        
-      socket.leave(room[num], () => {        
-        console.log(name + ' leave a ' + room[num]);
-        io.to(room[num]).emit('leaveRoom', num, name);
-      });
+
+    socket.on('sendVideoUrl', (url) => {
+        videoInfo.videoUrl = url;
+        io.to(room).emit('getVideoInfo', videoInfo);
+    });  
+
+    socket.on('sendBuffer', (time, room) => {
+        videoInfo.keyFrame = time;
+        io.to(room).emit('getVideoTime', videoInfo);
     });
-  
-  
-    socket.on('joinRoom', (num, name) => {   
-        a = num;     
-      socket.join(room[num], () => {
-        console.log(name + ' join a ' + room[num]);
-        io.to(room[num]).emit('joinRoom', num, name);
-      });
+
+    socket.on('liveKeyFrame', (time) => {
+        videoInfo.keyFrame = time;
     });
-  
-  
-    socket.on('chat message', (num, name, msg) => {
-      a = num;
-      io.to(room[a]).emit('chat message', name, msg);
-    });
-  });
+});
   
   httpServer.listen(3000, () => logger.info('Server listening on port 3000'));
-// const namespace1 = io.of('/namespace1');
-// namespace1.on('connection', (socket) => {
-//     socket.join('room1');    
-//     namespace1.emit('news', { hello: "hello namespace1"});
-// });
-
-// const namespace2 = io.of('/namespace2');
-// namespace2.on('connection', (socket) => {
-//     namespace2.emit('news', { hello: "hello namespace2"});
-// });
-
-// io.on('connection', (socket) => {        
-//     socket.on('message', (msg) => {
-//         console.log(msg);
-//         io.emit('message', msg);
-//     });
-
-//     socket.on('disconnect', () => {
-//         console.log('user disconnected');
-//     });
-// });
 
 /* ▼ 2022-05-11 공통 에러 처리 by 정민교 ▼ */
 process.on('uncaughtException', (err) => {
