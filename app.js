@@ -35,10 +35,11 @@ io.on('connection', (socket) => {
         roomInfo.videoFrame = videoInfo.keyFrame;
 
         socket.join(room);
-        io.to(room).emit('joinResult', roomInfo);
+        let clientCount = io.sockets.adapter.rooms.get(room).size;            
+        if(clientCount > 1) io.to(room).emit('joinResult', roomInfo);
     });
 
-    socket.on('sendVideoUrl', (url) => {
+    socket.on('sendVideoUrl', (url, room) => {        
         videoInfo.videoUrl = url;
         io.to(room).emit('getVideoInfo', videoInfo);
     });  
